@@ -1,1 +1,57 @@
+class Bicycle:
+    def __init__(self, bicycle_id, brand, is_available=True):
+        self.bicycle_id = bicycle_id
+        self.brand = brand
+        self.is_available = is_available
 
+
+class BicycleRental:
+    def __init__(self):
+        self.available_bicycles = []
+
+    def add_bicycle(self, bicycle_id, brand):
+        bicycle = Bicycle(bicycle_id, brand)
+        self.available_bicycles.append(bicycle)
+
+    def rent_bicycle(self, bicycle_id):
+        for bicycle in self.available_bicycles:
+            if bicycle.bicycle_id == bicycle_id:
+                if bicycle.is_available:
+                    bicycle.is_available = False
+                    print(f"Bicycle {bicycle_id} rented successfully!")
+                else:
+                    print(f"Bicycle {bicycle_id} is not available for rent.")
+                return
+        print(f"Bicycle {bicycle_id} not found.")
+
+    def return_bicycle(self, bicycle_id):
+        for bicycle in self.available_bicycles:
+            if bicycle.bicycle_id == bicycle_id:
+                if not bicycle.is_available:
+                    bicycle.is_available = True
+                    print(f"Bicycle {bicycle_id} returned successfully!")
+                else:
+                    print(f"Bicycle {bicycle_id} is already available.")
+                return
+        print(f"Bicycle {bicycle_id} not found.")
+
+
+# Example usage
+rental_app = BicycleRental()
+
+# Add bicycles to the rental app
+rental_app.add_bicycle(1, "Trek")
+rental_app.add_bicycle(2, "Giant")
+rental_app.add_bicycle(3, "Specialized")
+
+# Rent a bicycle
+rental_app.rent_bicycle(2)
+
+# Try to rent the same bicycle again
+rental_app.rent_bicycle(2)
+
+# Return a bicycle
+rental_app.return_bicycle(2)
+
+# Try to return the same bicycle again
+rental_app.return_bicycle(2)
